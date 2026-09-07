@@ -1,27 +1,26 @@
-from tools import research_topic
 from retrieve import search_knowledge
+from tools import research_topic
 
-def search_topic(topic):
-    rag_result=search_knowledge(topic,k=3)
-    knowledge="\n\n".join(
+
+def research(topic):
+
+    # Search our private knowledge base
+    rag_results = search_knowledge(topic, k=3)
+
+    knowledge = "\n\n".join(
         document.page_content
-        for document in rag_result
+        for document in rag_results
     )
 
-    web_result=research_topic(topic)
-    web_info="\n\n".join(
-        result['content']
-        for result in web_result
+    # Search the web
+    web_results = research_topic(topic)
+
+    web_information = "\n\n".join(
+        result["content"]
+        for result in web_results
     )
+
     return {
-        "Knowledge":knowledge,
-        "Web":web_info
+        "knowledge": knowledge,
+        "web_information": web_information
     }
-
-if __name__=="__main__":
-    topic=input("Enter topic:")
-    results=search_topic(topic)
-    print("====Knowledge Base====\n")
-    print(results["Knowledge"])
-    print("====Web Base====\n")
-    print(results["Web"])
