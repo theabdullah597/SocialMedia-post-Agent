@@ -20,7 +20,17 @@ def research(topic):
         for result in web_results
     )
 
+    sources = [
+        {
+            "title": res.get("title", ""),
+            "url": res.get("url", ""),
+            "content": res.get("content", "")
+        }
+        for res in web_results
+    ]
+
     return {
         "knowledge": knowledge,
-        "web_information": web_information
+        "web_information": web_information,
+        "sources": sources
     }
